@@ -1,6 +1,7 @@
 package Solitaire;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.MouseInfo;
 import java.awt.Polygon;
@@ -105,6 +106,21 @@ public class Solitaire extends JPanel implements MouseListener {
 	int[] pile = { 0, 0, 0, 0, 0 };
 
 	/**
+	 * starting time, used for timing
+	 */
+	long startTime = 0;
+
+	/**
+	 * elapsed time, used for timing
+	 */
+	long time = 0;
+
+	/**
+	 * is the game over?
+	 */
+	boolean gameOver = false;
+
+	/**
 	 * solitaire constructor
 	 */
 	public Solitaire() {
@@ -143,7 +159,10 @@ public class Solitaire extends JPanel implements MouseListener {
 		jf.setSize(getToolkit().getScreenSize());
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.add(game);
+		startTime = System.currentTimeMillis();
 		while (true) {
+			if (!gameOver)
+				time = System.currentTimeMillis() - startTime;
 			jf.repaint();
 			try {
 				Thread.sleep(50);
@@ -157,6 +176,7 @@ public class Solitaire extends JPanel implements MouseListener {
 	 * Game over!
 	 */
 	public void gameOver() {
+		gameOver = true;
 		JOptionPane.showMessageDialog(this, "Game Over! You win!");
 		System.exit(ABORT);
 	}
@@ -255,6 +275,16 @@ public class Solitaire extends JPanel implements MouseListener {
 		}
 		for (Card c : selected)
 			c.drawSelf(g);
+
+		g.setColor(Color.BLACK);
+		g.setFont(new Font("Helvetica", 30, 30));
+		long seconds = (time / 1000) % 60;
+		long minutes = (time / 1000) / 60;
+		String timeDisplay = Long.toString(seconds);
+		if (timeDisplay.length() == 1)
+			timeDisplay = "0" + timeDisplay;
+		timeDisplay = minutes + ":" + timeDisplay;
+		g.drawString(timeDisplay, 1100, 160);
 	}
 
 	/**
