@@ -31,6 +31,16 @@ public class Solitaire extends JPanel implements MouseListener {
 	JFrame jf;
 
 	/**
+	 * width of screen
+	 */
+	int screenWidth = getToolkit().getScreenSize().width;
+
+	/**
+	 * height of screen
+	 */
+	int screenHeight = getToolkit().getScreenSize().height;
+
+	/**
 	 * Deck of cards
 	 */
 	ArrayList<Card> deck = new ArrayList<Card>();
@@ -185,6 +195,9 @@ public class Solitaire extends JPanel implements MouseListener {
 	 * paint function, called every frame
 	 */
 	public void paint(Graphics g) {
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, screenWidth, screenHeight);
+
 		if (pile[0] == 13 && pile[1] == 13 && pile[2] == 13 && pile[3] == 13 && pile[4] == 0) {
 			pile[4] = 1;
 			gameOver();
@@ -199,13 +212,13 @@ public class Solitaire extends JPanel implements MouseListener {
 			previousx = currentx;
 			previousy = currenty;
 		}
-		g.setColor(Color.BLACK);
+		g.setColor(Color.YELLOW);
 		g.drawString("" + deck.size(), 1100, 100);
 		g.drawString("" + deckIndex, 1100, 120);
-		g.drawOval(590, 8, 15, 15);
-		g.drawString("C", 593, 20);
-		g.drawString("Jonathan Guo", 610, 20);
-
+		g.drawOval(screenWidth / 2 - 50, 8, 15, 15);
+		g.drawString("C", screenWidth / 2 - 50 + 3, 20);
+		g.drawString("Jonathan Guo", screenWidth / 2 - 50 + 20, 20);
+		
 		for (int i = 0; i < 8; i++)
 			g.drawLine(100 * i + 190, 50, 100 * i + 190, 720);
 
@@ -216,7 +229,7 @@ public class Solitaire extends JPanel implements MouseListener {
 				if (c.revealed) { // card is revealed
 					c.drawSelf(g);
 				} else { // card is not revealed
-					g.setColor(Color.BLACK);
+					g.setColor(Color.DARK_GRAY);
 					g.fillRect(c.x, c.y, 80, 100);
 					g.setColor(Color.BLUE);
 					g.drawRect(c.x, c.y, 80, 100);
@@ -255,7 +268,7 @@ public class Solitaire extends JPanel implements MouseListener {
 				continue;
 			g.setColor(Color.WHITE);
 			if (i == 0)
-				g.setColor(Color.BLACK);
+				g.setColor(Color.DARK_GRAY);
 			g.fillRect(50, 125 * i + 50, 80, 100);
 			g.setColor(Color.BLUE);
 			g.drawRect(50, 125 * i + 50, 80, 100);
