@@ -289,7 +289,7 @@ public class Solitaire extends JPanel implements MouseListener {
 		for (Card c : selected)
 			c.drawSelf(g);
 
-		g.setColor(Color.BLACK);
+		g.setColor(Color.YELLOW);
 		g.setFont(new Font("Helvetica", 30, 30));
 		long seconds = (time / 1000) % 60;
 		long minutes = (time / 1000) / 60;
